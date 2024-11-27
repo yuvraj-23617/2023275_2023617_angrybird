@@ -38,11 +38,8 @@ public class GameScreen implements Screen {
         this.game = game;
         this.level = level;
 
-        // Initialize textures and positions
-        background = new Texture(Gdx.files.internal("level_1.png"));
-        groundTexture = new Texture(Gdx.files.internal("ground.png"));
-        birdTexture = new Texture(Gdx.files.internal("redbird.png"));
-        pigTexture = new Texture(Gdx.files.internal("pig.png"));
+        // Initialize textures and positions based on the level
+        loadLevelAssets(level);
 
         initialPosition = new Vector2(150, 300); // Initial position near the slingshot
         birdPosition = new Vector2(initialPosition);
@@ -59,6 +56,29 @@ public class GameScreen implements Screen {
 
         birdsLeft = 3; // Number of birds available
         levelFinished = false;
+    }
+
+    private void loadLevelAssets(int level) {
+        // Load level-specific assets
+        switch (level) {
+            case 1:
+                background = new Texture(Gdx.files.internal("level_1.png"));
+                pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                break;
+            case 2:
+                background = new Texture(Gdx.files.internal("level_2.png"));
+                pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                break;
+            case 3:
+                background = new Texture(Gdx.files.internal("level_3.png"));
+                pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid level: " + level);
+        }
+
+        groundTexture = new Texture(Gdx.files.internal("ground.png"));
+        birdTexture = new Texture(Gdx.files.internal("redbird.png"));
     }
 
     @Override
@@ -150,7 +170,11 @@ public class GameScreen implements Screen {
     private void checkLevelCompletion() {
         if (!pigAlive) {
             levelFinished = true;
-            game.setScreen(new WinScreen(game)); // Transition to "You Won" screen
+            if (level < 3) {
+                game.setScreen(new GameScreen(game, level + 1)); // Load next level
+            } else {
+                game.setScreen(new WinScreen(game)); // Transition to "You Won" screen
+            }
         } else if (birdsLeft == 0) {
             levelFinished = true;
             game.setScreen(new LoseScreen(game)); // Transition to "You Lost" screen
