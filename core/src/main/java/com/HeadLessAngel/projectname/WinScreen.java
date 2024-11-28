@@ -16,21 +16,22 @@ public class WinScreen implements Screen {
 
     public WinScreen(AngryBird game) {
         this.game = game;
-        winTexture = new Texture(Gdx.files.internal("you_won.png")); // Ensure this texture is available
-        mainMenuButton = new Texture(Gdx.files.internal("menu.jpg")); // Path to menu button
-        nextLevelButton = new Texture(Gdx.files.internal("next level.png")); // Path to next level button
 
-        // Button bounds (adjust according to your UI)
+        // Load textures
+        winTexture = new Texture(Gdx.files.internal("you_won.png")); // Background image
+        mainMenuButton = new Texture(Gdx.files.internal("menu.jpg")); // Main Menu button image
+        nextLevelButton = new Texture(Gdx.files.internal("next level.png")); // Next Level button image
+
+        // Define button bounds (adjust positions and sizes as needed)
         mainMenuBounds = new Rectangle(100, 150, 200, 100);
         nextLevelBounds = new Rectangle(100, 50, 200, 100);
     }
 
     @Override
     public void render(float delta) {
-        // Handle input
-        handleInput();
+        handleInput(); // Handle button clicks
 
-        // Clear the screen and draw background
+        // Clear the screen and draw the UI
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -44,9 +45,9 @@ public class WinScreen implements Screen {
     private void handleInput() {
         if (Gdx.input.justTouched()) {
             float touchX = Gdx.input.getX();
-            float touchY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Flip Y-axis
+            float touchY = Gdx.graphics.getHeight() - Gdx.input.getY(); // Convert touch coordinates
 
-            // Handle next level button click
+            // Handle Next Level button click
             if (nextLevelBounds.contains(touchX, touchY)) {
                 int currentLevel = game.getCurrentLevel();
                 if (currentLevel < 3) {
@@ -56,9 +57,10 @@ public class WinScreen implements Screen {
                 }
             }
 
-            // Handle main menu button click
+            // Handle Main Menu button click
             else if (mainMenuBounds.contains(touchX, touchY)) {
-                game.setScreen(new MainMenuScreen(game)); // Transition to main menu
+                // Navigate to Stages Screen instead of Main Menu
+                game.setScreen(new StagesScreen(game)); // Update screen transition here
             }
         }
     }
