@@ -1,3 +1,4 @@
+// GameScreen Class
 package com.HeadLessAngel.projectname;
 
 import com.badlogic.gdx.Gdx;
@@ -169,17 +170,19 @@ public class GameScreen implements Screen {
 
     private void checkLevelCompletion() {
         if (!pigAlive) {
+            // Player wins the current level
             levelFinished = true;
-            if (level < 3) {
-                game.setScreen(new GameScreen(game, level + 1)); // Load next level
-            } else {
-                game.setScreen(new WinScreen(game)); // Transition to "You Won" screen
-            }
+
+            // Show "You Won" screen after every level
+            game.setScreen(new WinScreen(game)); // Pass current level to WinScreen
+
         } else if (birdsLeft == 0) {
+            // Player loses the current level
             levelFinished = true;
-            game.setScreen(new LoseScreen(game)); // Transition to "You Lost" screen
+            game.setScreen(new LoseScreen(game)); // Transition to lose screen
         }
     }
+
 
     @Override
     public void dispose() {
