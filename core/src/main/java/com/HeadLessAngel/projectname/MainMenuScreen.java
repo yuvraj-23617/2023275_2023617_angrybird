@@ -1,3 +1,4 @@
+// MainMenuScreen Class
 package com.HeadLessAngel.projectname;
 
 import com.badlogic.gdx.Gdx;
@@ -54,8 +55,9 @@ public class MainMenuScreen implements Screen {
 
             // Check if play button was clicked
             if (playBounds.contains(touchX, touchY)) {
-                // Change to stages screen
-                game.setScreen(new StagesScreen(game));
+                // Change to first level's GameScreen
+                game.setCurrentLevel(1);
+                game.setScreen(new GameScreen(game, game.getCurrentLevel()));
                 dispose();
             }
             // Check if exit button was clicked
