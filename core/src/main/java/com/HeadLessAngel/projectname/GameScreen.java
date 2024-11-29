@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
         birdLaunched = false;
         isDragging = false;
 
-        birdsLeft = 3; // Number of birds available
+        birdsLeft = 1; // Number of birds available
         levelFinished = false;
     }
 
@@ -94,12 +94,12 @@ public class GameScreen implements Screen {
 
                 // Catapult position for level 2
                 catapultX = 250;  // Different X position
-                catapultY = 250;  // Different Y position
+                catapultY = 550;  // Different Y position
                 catapultWidth = 120;
                 catapultHeight = 180;
 
-                pigBounds = new Rectangle(700, 250, pigTexture.getWidth(), pigTexture.getHeight());
-                pigBounds2 = new Rectangle(900, 100, pigTexture.getWidth(), pigTexture.getHeight());
+                pigBounds = new Rectangle(625, 375, pigTexture.getWidth(), pigTexture.getHeight());
+                pigBounds2 = new Rectangle(950, 500, pigTexture.getWidth(), pigTexture.getHeight());
                 pigAlive2 = true;
                 break;
 

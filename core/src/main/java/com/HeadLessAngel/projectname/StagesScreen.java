@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 
 public class StagesScreen implements Screen {
     private final AngryBird game;
@@ -21,6 +22,9 @@ public class StagesScreen implements Screen {
     private final Rectangle stage3Bounds;
     private final Rectangle levelimageBounds;
     private final Rectangle backBounds;
+
+
+
 
     public StagesScreen(AngryBird game) {
         this.game = game;
