@@ -53,7 +53,6 @@ public class MainMenuScreen implements Screen {
             // Flip Y coordinate because OpenGL coordinates start from bottom-left
             float touchY = Gdx.graphics.getHeight() - Gdx.input.getY();
 
-            // Check if play button was clicked
             if (playBounds.contains(touchX, touchY)) {
                 // Change to StagesScreen instead of directly going to GameScreen
                 game.setScreen(new StagesScreen(game)); // Transition to StagesScreen
