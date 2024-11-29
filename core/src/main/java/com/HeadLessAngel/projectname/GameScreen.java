@@ -20,7 +20,11 @@ public class GameScreen implements Screen {
 
     private Rectangle groundBounds;
     private Rectangle birdBounds;
+
+
     private Rectangle pigBounds;
+    private Rectangle pigBounds2;
+    private boolean pigAlive2;
 
     private Vector2 birdPosition;
     private Vector2 birdVelocity;
@@ -49,7 +53,8 @@ public class GameScreen implements Screen {
 
         groundBounds = new Rectangle(0, 0, Gdx.graphics.getWidth(), groundTexture.getHeight());
         pigBounds = new Rectangle(600, 200, pigTexture.getWidth(), pigTexture.getHeight());
-
+        pigBounds2 = new Rectangle(800, 50, pigTexture.getWidth(), pigTexture.getHeight()); // Adjust position as needed
+        pigAlive2 = true;
         pigAlive = true;
         birdAlive = true;
         birdLaunched = false;
@@ -65,14 +70,18 @@ public class GameScreen implements Screen {
             case 1:
                 background = new Texture(Gdx.files.internal("level_1.png"));
                 pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                pigAlive2=false;
                 break;
             case 2:
                 background = new Texture(Gdx.files.internal("level_2.png"));
                 pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                pigAlive2=true;
                 break;
             case 3:
                 background = new Texture(Gdx.files.internal("level_3.png"));
                 pigTexture = new Texture(Gdx.files.internal("pig.png"));
+                pigAlive2=true;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid level: " + level);
@@ -107,6 +116,10 @@ public class GameScreen implements Screen {
             pigAlive = false; // Pig "dies"
             checkLevelCompletion();
         }
+        if (pigAlive2 && birdAlive && birdBounds.overlaps(pigBounds2)) {
+            pigAlive2 = false; // Second pig "dies"
+            checkLevelCompletion(); // Check level completion
+        }
 
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -121,6 +134,9 @@ public class GameScreen implements Screen {
         // Render the pig only if it's alive
         if (pigAlive) {
             game.batch.draw(pigTexture, pigBounds.x, pigBounds.y);
+        }
+        if (pigAlive2 && level == 2) { // Render pig2 only if it's alive and we are in level 2
+            game.batch.draw(pigTexture, pigBounds2.x, pigBounds2.y);
         }
 
         // Render the bird only if it's alive
@@ -169,19 +185,19 @@ public class GameScreen implements Screen {
     }
 
     private void checkLevelCompletion() {
-        if (!pigAlive) {
+        if (!pigAlive && !pigAlive2) {
             // Player wins the current level
             levelFinished = true;
 
             // Show "You Won" screen after every level
             game.setScreen(new WinScreen(game)); // Pass current level to WinScreen
-
         } else if (birdsLeft == 0) {
             // Player loses the current level
             levelFinished = true;
             game.setScreen(new LoseScreen(game)); // Transition to lose screen
         }
     }
+
 
 
     @Override
