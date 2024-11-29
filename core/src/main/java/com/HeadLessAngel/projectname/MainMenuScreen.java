@@ -55,10 +55,9 @@ public class MainMenuScreen implements Screen {
 
             // Check if play button was clicked
             if (playBounds.contains(touchX, touchY)) {
-                // Change to first level's GameScreen
-                game.setCurrentLevel(1);
-                game.setScreen(new GameScreen(game, game.getCurrentLevel()));
-                dispose();
+                // Change to StagesScreen instead of directly going to GameScreen
+                game.setScreen(new StagesScreen(game)); // Transition to StagesScreen
+                dispose(); // Dispose the MainMenuScreen if not needed anymore
             }
             // Check if exit button was clicked
             else if (exitBounds.contains(touchX, touchY)) {
@@ -67,6 +66,7 @@ public class MainMenuScreen implements Screen {
             }
         }
     }
+
 
     @Override
     public void dispose() {
